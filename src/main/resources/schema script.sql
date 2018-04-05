@@ -23,7 +23,7 @@ CREATE SCHEMA IF NOT EXISTS hello_schema AUTHORIZATION hello_user;
 --
 
 CREATE TABLE hello_schema.contacts (
-  id integer NOT NULL,
+  id bigint NOT NULL,
   name character varying(255)
 );
 
@@ -89,3 +89,8 @@ INSERT INTO hello_schema.contacts (id, name) VALUES (7, 'Andrii');
 INSERT INTO hello_schema.contacts (id, name) VALUES (8, 'Oleksandr');
 INSERT INTO hello_schema.contacts (id, name) VALUES (9, 'Stanislav');
 INSERT INTO hello_schema.contacts (id, name) VALUES (10, 'Dmytro');
+INSERT INTO hello_schema.contacts (id, name) VALUES (11, 'Stepan');
+INSERT INTO hello_schema.contacts (id, name) VALUES (12, 'Ivan');
+INSERT INTO hello_schema.contacts (id, name) VALUES (13, 'Tanya');
+INSERT INTO hello_schema.contacts (id, name) VALUES (14, 'Ylia');
+INSERT INTO hello_schema.contacts (id, name) VALUES (15, 'Victoria');

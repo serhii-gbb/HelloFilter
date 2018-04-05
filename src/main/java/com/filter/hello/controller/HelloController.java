@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +28,11 @@ public class HelloController {
     public ResponseEntity<Map<String, List<Contact>>> getMatchContacts(@RequestParam("nameFilter") String filter) {
 
         Pattern pattern = Pattern.compile(filter);
-        List<Contact> byCondition = filterService.getByCondition(pattern);
+        List<Contact> contacts = filterService.getByCondition(pattern);
 
 
         Map<String, List<Contact>> result = new HashMap<>();
-        result.put("contacts", byCondition);
+        result.put("contacts", contacts);
 
         return new ResponseEntity<Map<String, List<Contact>>>(result, HttpStatus.OK);
     }
