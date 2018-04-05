@@ -13,7 +13,7 @@
 
 1.2 Use "database script" for creating DB
 
-1.3 Use "schema script" for creating schema, table with records
+1.3 Use "schema script" for creating schema and table with records
 
 
 **Launch application:**
@@ -23,3 +23,5 @@ You can assemble app with maven and run JAR in the console
 **console command:** java -jar hello-filter.jar
 
 **browser URL:** http://localhost:8080/hello/contacts?nameFilter=^RegEx$
+
+All records will not according to regular expression!
