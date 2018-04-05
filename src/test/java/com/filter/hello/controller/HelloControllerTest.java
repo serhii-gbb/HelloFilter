@@ -63,6 +63,6 @@ public class HelloControllerTest {
                 .param("nameFilter", "^.$")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.contacts[0].id", Is.is(contacts.get(0).getId())));
+                .andExpect(jsonPath("$.contacts[0].id").value(Is.is(contacts.get(0).getId()), Long.class));
     }
 }
