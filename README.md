@@ -1,6 +1,6 @@
 #REST RegEx service
 
-**_Travis CI Build Satus_**
+**_Travis CI Build Status_**
 [![Build Status](https://travis-ci.org/serhii-gbb/HelloCity.svg?branch=master)](https://travis-ci.org/serhii-gbb/HelloCity)
 
 **Technology:** PostgreSQL, Spring (Boot, Data)
@@ -18,10 +18,12 @@
 
 **Launch application:**
 
-You can assemble app with maven and run JAR in the console
+You can assemble app with maven and run JAR in the console or double click on the JAR file
 
 **console command:** java -jar hello-filter.jar
 
 **browser URL:** http://localhost:8080/hello/contacts?nameFilter=^RegEx$
 
-All records will not according to regular expression!
+_**If your regular expression will be not acceptable according to compiling rules, you will get Http status 406(BAD_REQUEST)**_
+
+_`All records will not according to regular expression!`_

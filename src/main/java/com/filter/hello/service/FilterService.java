@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 @Service
 public class FilterService {
 
-    private static final int RECORDS_PER_PAGE = 3;
+    private static final int RECORDS_PER_PAGE = 500_000;
 
     private ContactRepository contactRepository;
 
@@ -24,8 +24,7 @@ public class FilterService {
     }
 
 
-
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
     public List<Contact> getByCondition(Pattern pattern) {
         List<Contact> result = new LinkedList<>();
 

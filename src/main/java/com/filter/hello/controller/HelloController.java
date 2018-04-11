@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 @RestController
 @RequestMapping("/hello")
@@ -26,14 +27,20 @@ public class HelloController {
 
     @GetMapping(path = "/contacts")
     public ResponseEntity<Map<String, List<Contact>>> getMatchContacts(@RequestParam("nameFilter") String filter) {
+        Pattern pattern;
 
-        Pattern pattern = Pattern.compile(filter);
+        try {
+            pattern = Pattern.compile(filter);
+        } catch (PatternSyntaxException ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         List<Contact> contacts = filterService.getByCondition(pattern);
 
 
         Map<String, List<Contact>> result = new HashMap<>();
         result.put("contacts", contacts);
 
-        return new ResponseEntity<Map<String, List<Contact>>>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
