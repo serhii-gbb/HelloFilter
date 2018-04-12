@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ContactRepository extends JpaRepository<Contact, Integer> {
+public interface ContactRepository extends JpaRepository<Contact, Long> {
 
     @Query("select count(c) from Contact as c")
     int countRecords();
