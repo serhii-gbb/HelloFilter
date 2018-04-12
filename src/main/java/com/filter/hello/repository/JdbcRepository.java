@@ -9,5 +9,5 @@ public interface JdbcRepository {
 
     List<Contact> getByJdbc(Pattern pattern);
 
-    List<Contact> getAllByJdbcTemp(Pattern pattern);
+    List<Contact> getByJdbcTemplate(Pattern pattern);
 }

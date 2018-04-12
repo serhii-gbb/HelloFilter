@@ -3,7 +3,6 @@ package com.filter.hello.service;
 import com.filter.hello.entity.Contact;
 import com.filter.hello.repository.ContactRepository;
 import com.filter.hello.repository.JdbcRepository;
-import com.filter.hello.repository.JdbcRepositoryImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +24,7 @@ public class FilterService {
 
     @Transactional()
     public List<Contact> getByCondition(Pattern pattern) {
-        return jdbcRepository.getAllByJdbcTemp(pattern);
+        return jdbcRepository.getByJdbcTemplate(pattern);
     }
 
 }

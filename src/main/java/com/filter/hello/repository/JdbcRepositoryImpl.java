@@ -63,7 +63,7 @@ public class JdbcRepositoryImpl implements JdbcRepository{
     }
 
 
-    public List<Contact> getAllByJdbcTemp(Pattern pattern) {
+    public List<Contact> getByJdbcTemplate(Pattern pattern) {
         List<Contact> contacts = new LinkedList<>();
 
         jdbcTemplate.setFetchSize(FETCH_SIZE);
