@@ -6,13 +6,14 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 
 @Repository
-public class JdbcRepositoryImpl implements JdbcRepository{
+public class JdbcRepositoryImpl implements JdbcRepository {
 
     private final int FETCH_SIZE = 1000;
     private final String GET_ALL = "SELECT * FROM hello_schema.contacts";
@@ -25,6 +26,7 @@ public class JdbcRepositoryImpl implements JdbcRepository{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
     public List<Contact> getByJdbc(Pattern pattern) {
         List<Contact> contacts = new LinkedList<>();
 
@@ -33,20 +35,12 @@ public class JdbcRepositoryImpl implements JdbcRepository{
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)) {
 
-
             connection.setAutoCommit(false);
-
 
             resultSet = statement.executeQuery(GET_ALL);
             resultSet.setFetchSize(FETCH_SIZE);
 
-
-            while (resultSet.next()) {
-                if (!pattern.matcher(resultSet.getString("name")).find()) {
-                    contacts.add(new Contact(resultSet.getInt("id"), resultSet.getString("name")));
-                }
-            }
-
+            contacts.addAll(resultExtractor(pattern, resultSet));
 
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -54,7 +48,7 @@ public class JdbcRepositoryImpl implements JdbcRepository{
             try {
                 if (resultSet != null && !resultSet.isClosed()) resultSet.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.err.println(e.getMessage());
             }
         }
 
@@ -69,12 +63,24 @@ public class JdbcRepositoryImpl implements JdbcRepository{
         jdbcTemplate.setFetchSize(FETCH_SIZE);
 
         jdbcTemplate.query(GET_ALL, resultSet -> {
-            while (resultSet.next()) {
-                if (!pattern.matcher(resultSet.getString("name")).find()) {
-                    contacts.add(new Contact(resultSet.getInt("id"), resultSet.getString("name")));
-                }
-            }
+            contacts.addAll(resultExtractor(pattern, resultSet));
         });
+
+        return contacts;
+    }
+
+
+    private List<Contact> resultExtractor(Pattern pattern, ResultSet resultSet) throws SQLException {
+        List<Contact> contacts = new ArrayList<>();
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            int id = resultSet.getInt("id");
+
+
+            if (!pattern.matcher(name).find()) {
+                contacts.add(new Contact(id, name));
+            }
+        }
 
         return contacts;
     }
