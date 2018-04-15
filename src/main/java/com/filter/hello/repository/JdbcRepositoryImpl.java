@@ -40,7 +40,7 @@ public class JdbcRepositoryImpl implements JdbcRepository {
             resultSet = statement.executeQuery(GET_ALL);
             resultSet.setFetchSize(FETCH_SIZE);
 
-            contacts.addAll(resultExtractor(pattern, resultSet));
+            contacts = resultExtractor(pattern, resultSet);
 
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -72,10 +72,10 @@ public class JdbcRepositoryImpl implements JdbcRepository {
 
     private List<Contact> resultExtractor(Pattern pattern, ResultSet resultSet) throws SQLException {
         List<Contact> contacts = new ArrayList<>();
+
         while (resultSet.next()) {
             String name = resultSet.getString("name");
             int id = resultSet.getInt("id");
-
 
             if (!pattern.matcher(name).find()) {
                 contacts.add(new Contact(id, name));
